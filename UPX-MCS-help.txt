@@ -1,0 +1,73 @@
+UPX-MCS HELP
+============
+
+OVERVIEW
+--------
+UPX-MCS is a batch script that compresses Windows EXE files with UPX while
+keeping an uncompressed backup next to the original.
+
+HOW IT WORKS
+------------
+1. The script looks for a saved UPX path in upx_path.txt.
+2. If no valid path is found, it asks you for the full path to upx.exe.
+3. It shows the last 5 EXE files you compressed.
+4. You can pick one from the list or press N to enter a new full EXE path.
+5. The original EXE is renamed to *-uncompressed.exe.
+6. A copy is restored to the original filename.
+7. UPX compresses the restored EXE.
+
+UPX FLAGS USED
+--------------
+--best
+--lzma
+--ultra-brute
+--compress-exports=1
+--strip-relocs=1
+--overlay=copy
+--force
+
+IMPORTANT FILES
+---------------
+compress.bat
+  Main script.
+
+upx_path.txt
+  Stores the UPX executable location for future runs.
+
+packed_history.txt
+  Stores the 5 most recent target EXE paths.
+
+EXAMPLE
+-------
+If you compress:
+  C:\Apps\Demo.exe
+
+The script creates:
+  C:\Apps\Demo-uncompressed.exe
+
+Then it restores:
+  C:\Apps\Demo.exe
+
+And compresses:
+  C:\Apps\Demo.exe
+
+NOTES
+-----
+- The history list is limited to the last 5 files.
+- If a file is selected again, it is moved to the newest history slot.
+- Some EXEs may not work correctly after aggressive compression.
+- Test the packed EXE before distributing it.
+
+TROUBLESHOOTING
+---------------
+"UPX not found"
+  Check the saved path or re-enter the correct path to upx.exe.
+
+"Target EXE not found"
+  Make sure the full EXE path exists.
+
+"Rename failed" or "Copy failed"
+  Close any running program that is locking the EXE and try again.
+
+"UPX compression failed"
+  The target may not be compatible with the selected UPX settings.
